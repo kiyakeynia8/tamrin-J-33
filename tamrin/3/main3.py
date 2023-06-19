@@ -1,5 +1,6 @@
 import cv2
 import matplotlib.pyplot as plt
+from boundingRect import kiya_boundingRect
 
 image = cv2.imread("input\dice.png")
 image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -25,13 +26,11 @@ number = 0
 for contour in contours:
     if cv2.contourArea(contour) < 90:
         continue
-    print(contour)
-    print("next")
-    x,y,w,h = cv2.boundingRect(contour)
+    x,y,w,h = kiya_boundingRect(contour)
     cv2.rectangle(image,(x,y),(x+w, y+w), (127,127,127), 2)
     number += 1 
 
+print(number)
 plt.imshow(image, cmap='gray')
 plt.show()
-print(number)
 cv2.imwrite("output/2_result.png", image)

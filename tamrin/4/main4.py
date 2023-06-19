@@ -1,5 +1,6 @@
 import cv2
 import matplotlib.pyplot as plt
+from contour_area import kiya_contour_area
 
 image = cv2.imread("input\dice.png")
 image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -23,15 +24,14 @@ contours, _ = cv2.findContours(image_thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX
 
 number = 0
 for contour in contours:
+    print(cv2.contourArea(contour))
+    print(kiya_contour_area(contour))
     if cv2.contourArea(contour) < 90:
         continue
-    print(contour)
-    print("next")
     x,y,w,h = cv2.boundingRect(contour)
     cv2.rectangle(image,(x,y),(x+w, y+w), (127,127,127), 2)
     number += 1 
 
 plt.imshow(image, cmap='gray')
 plt.show()
-print(number)
 cv2.imwrite("output/2_result.png", image)
